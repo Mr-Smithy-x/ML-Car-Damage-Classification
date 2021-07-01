@@ -21,13 +21,13 @@ class MainActivity : AppCompatActivity() {
         val img: ImageView = findViewById(R.id.imageToLabel)
         val img2: ImageView = findViewById(R.id.imageToLabel2)
         // assets folder image file name with extension
-        val fileName = "whole.jpeg"
-        val fileName2 = "damage.jpeg"
+        val notDamagedFile = "whole.jpeg"
+        val damageFile = "damage.jpeg"
         damage = CarDamageClassification(assets)
 
         // get bitmap from assets folder
-        val bitmap: Bitmap? = damage.getLocalBitmapAsset(fileName)
-        val bitmap2: Bitmap? = damage.getLocalBitmapAsset(fileName2)
+        val bitmap: Bitmap? = damage.getLocalBitmapAsset(notDamagedFile)
+        val bitmap2: Bitmap? = damage.getLocalBitmapAsset(damageFile)
         bitmap?.apply {
             img.setImageBitmap(this)
         }
