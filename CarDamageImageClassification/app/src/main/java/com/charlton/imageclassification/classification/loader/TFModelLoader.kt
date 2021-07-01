@@ -1,4 +1,4 @@
-package com.charlton.imageclassification.utils
+package com.charlton.imageclassification.classification.loader
 
 import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
@@ -12,7 +12,7 @@ import java.nio.ByteOrder
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 
-open class TFModelLoader(
+abstract class TFModelLoader(
     val filename: String,
     private val assets: AssetManager,
     protected val inputImageWidth: Int = 224, // Width of the image that our model expects

@@ -1,6 +1,7 @@
-package com.charlton.imageclassification.utils
+package com.charlton.imageclassification.classification
 
 import android.content.res.AssetManager
+import com.charlton.imageclassification.classification.base.BinaryClassification
 
 class CarDamageClassification(asset: AssetManager) : BinaryClassification(
     labels = arrayOf("Damaged", "Not Damaged"),
@@ -11,8 +12,8 @@ class CarDamageClassification(asset: AssetManager) : BinaryClassification(
     /**
      * Get Car Damage
      */
-    fun isCarDamaged(float: Float): Boolean {
-        return getLabelIndex(float) == 0
+    fun isCarDamaged(prediction: Float): Boolean {
+        return getLabelIndex(prediction)[0] == 0
     }
 
 }

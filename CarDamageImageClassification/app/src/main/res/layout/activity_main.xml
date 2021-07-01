@@ -16,17 +16,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageToLabel"
+            android:id="@+id/image_first_prediction"
             android:layout_width="match_parent"
             android:layout_height="250dp" />
         <Button
-            android:id="@+id/btnTest"
+            android:id="@+id/btnFirstPredTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Assess Car"
             android:layout_gravity="center"/>
         <TextView
-            android:id="@+id/txtOutput"
+            android:id="@+id/firstPredTxtOutput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -42,17 +42,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageToLabel2"
+            android:id="@+id/image_second_prediction"
             android:layout_width="match_parent"
             android:layout_height="250dp" />
         <Button
-            android:id="@+id/btnTest2"
+            android:id="@+id/btnSecondPredTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Assess 2nd Car"
             android:layout_gravity="center"/>
         <TextView
-            android:id="@+id/txtOutput2"
+            android:id="@+id/secondPredTxtOutput2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
