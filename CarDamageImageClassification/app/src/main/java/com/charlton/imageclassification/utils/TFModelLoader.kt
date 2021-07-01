@@ -30,6 +30,9 @@ open class TFModelLoader(
         model = loadModelFile()!!
     }
 
+    /**
+     * Load our model
+     */
     protected fun loadModelFile(): MappedByteBuffer? {
         val fileDescriptor: AssetFileDescriptor = assets.openFd("${filename}.tflite")
         val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
@@ -40,7 +43,7 @@ open class TFModelLoader(
     }
 
 
-    // extension function to get bitmap from assets
+    // get bitmap from assets
     fun getLocalBitmapAsset(fileName: String): Bitmap? {
         return try {
             with(assets.open(fileName)) {
@@ -52,6 +55,11 @@ open class TFModelLoader(
     }
 
 
+    /**
+     * We should take our bitmap, x, y and color channel values
+     * normalize the rgb values so that our machine learning model can
+     * predict on our images better.
+     */
     protected fun convertBitmapToByteBufferAndNormalized(bitmap: Bitmap): Array<Array<Array<FloatArray>>> {
         // Specify the size of the byteBuffer
         val byteBuffer = ByteBuffer.allocateDirect(modelInputSize)
@@ -61,18 +69,18 @@ open class TFModelLoader(
         bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
         // Loop through all the pixels and save them into the buffer
         val input = Array(1) {
-            Array(224) {
-                Array(224) {
+            Array(bitmap.width) {
+                Array(bitmap.height) {
                     FloatArray(3)
                 }
             }
         }
-        for (x in 0..223) {
-            for (y in 0..223) {
-                val pixel = bitmap.getPixel(x, y)
-                input[0][x][y][0] = Color.red(pixel) / 255.0f
-                input[0][x][y][1] = Color.green(pixel) / 255.0f
-                input[0][x][y][2] = Color.blue(pixel) / 255.0f
+        for (x in 0 until bitmap.width) {
+            for (y in 0 until bitmap.height) {
+                val pixel = bitmap.getPixel(x, y)               // Get Pixel (X, Y) values, then store rgb
+                input[0][x][y][0] = Color.red(pixel) / 255.0f   // Red
+                input[0][x][y][1] = Color.green(pixel) / 255.0f // Green
+                input[0][x][y][2] = Color.blue(pixel) / 255.0f  // Blue
             }
         }
         bitmap.recycle()

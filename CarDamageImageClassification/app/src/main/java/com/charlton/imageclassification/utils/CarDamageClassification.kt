@@ -8,6 +8,9 @@ class CarDamageClassification(asset: AssetManager) : BinaryClassification(
     asset = asset
 ) {
 
+    /**
+     * Get Car Damage
+     */
     fun isCarDamaged(float: Float): Boolean {
         return getLabelIndex(float) == 0
     }

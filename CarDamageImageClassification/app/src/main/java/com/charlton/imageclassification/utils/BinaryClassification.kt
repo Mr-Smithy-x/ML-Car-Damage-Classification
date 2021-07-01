@@ -6,24 +6,32 @@ import org.tensorflow.lite.Interpreter
 import kotlin.math.round
 
 open class BinaryClassification(
-    val labels: Array<String> = Array(2) {""},
-    model_file: String,
-    asset: AssetManager
+    val labels: Array<String> = Array(2) {""}, // Labels to translated index to labels names
+    model_file: String, // model of the file
+    asset: AssetManager // our asset manager
 ) : TFModelLoader(model_file, asset) {
 
 
     // Output you get from your model
-    protected val outputArray = Array(1) { FloatArray(1) }
+    private val outputArray = Array(1) { FloatArray(1) }
 
-
+    /**
+     * Get label prediction index
+     */
     fun getLabelIndex(float: Float): Int {
         return round(float).toInt()
     }
 
+    /**
+     * Get label name on predictions based on index of prediction confidence
+     */
     fun getLabel(float: Float): String {
         return labels[getLabelIndex(float)]
     }
 
+    /**
+     * Make a prediction
+     */
     fun predict(bitmap: Bitmap): Float {
         try {
             return Interpreter(model).use { interpreter ->
