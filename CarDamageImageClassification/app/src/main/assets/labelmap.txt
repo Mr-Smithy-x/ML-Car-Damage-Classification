@@ -1,0 +1,8 @@
+item {
+  name: "00-damage"
+  id: 0
+}
+item {
+  name: "01-whole"
+  id: 1
+}
