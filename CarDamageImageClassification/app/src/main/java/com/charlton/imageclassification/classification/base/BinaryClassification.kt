@@ -4,7 +4,6 @@ import android.content.res.AssetManager
 import android.graphics.Bitmap
 import com.charlton.imageclassification.classification.loader.TFModelLoader
 import org.tensorflow.lite.Interpreter
-import kotlin.math.round
 import kotlin.math.roundToInt
 
 /**
@@ -36,20 +35,20 @@ abstract class BinaryClassification(
 
     /**
      * Get label prediction index
-     * @param float in an array of floats or a single float
+     * @param predictions in an array of floats or a single float
      * @return An array of index for your labels
      */
-    fun getLabelIndex(vararg float: Float): IntArray {
-        return float.map{it.roundToInt()}.toIntArray()
+    fun getLabelIndex(vararg predictions: Float): IntArray {
+        return predictions.map{it.roundToInt()}.toIntArray()
     }
 
     /**
      * Get label name on predictions based on index of prediction confidence
-     * @param float in an array of floats or a single float
+     * @param predictions in an array of floats or a single float
      * @return An array of strings or labels
      */
-    fun getLabel(vararg float: Float): Array<String> {
-        return getLabelIndex(*float).map {
+    fun getLabel(vararg predictions: Float): Array<String> {
+        return getLabelIndex(*predictions).map {
             labels[it]
         }.toTypedArray()
     }
