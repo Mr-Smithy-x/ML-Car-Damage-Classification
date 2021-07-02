@@ -2,7 +2,6 @@ package com.charlton.imageclassification.classification.base
 
 import android.content.res.AssetManager
 import android.graphics.Bitmap
-import android.util.Log
 import com.charlton.imageclassification.classification.loader.TFModelLoader
 import org.tensorflow.lite.Interpreter
 import kotlin.math.round
@@ -23,11 +22,22 @@ abstract class BinaryClassification(
 ) : TFModelLoader(model_file, asset) {
 
 
-    // Output you get from your model
-    private val outputArray = Array(1) { FloatArray(1) }
+    /**
+     * Get True Labels 1 (T) & 0 (F) as an array
+     * depending on predictions so sending in two images will return
+     * 2... [0, 1], 3... [0, 1, 0] etc
+     * @param float in an array of floats or a single float
+     * @return An array of true/false labels
+     */
+    fun getTrueLabels(vararg predictions: Float): BooleanArray {
+        return getLabelIndex(*predictions).map { it == 1 }.toBooleanArray()
+    }
+
 
     /**
      * Get label prediction index
+     * @param float in an array of floats or a single float
+     * @return An array of index for your labels
      */
     fun getLabelIndex(vararg float: Float): IntArray {
         return float.map{it.roundToInt()}.toIntArray()
@@ -35,6 +45,8 @@ abstract class BinaryClassification(
 
     /**
      * Get label name on predictions based on index of prediction confidence
+     * @param float in an array of floats or a single float
+     * @return An array of strings or labels
      */
     fun getLabel(vararg float: Float): Array<String> {
         return getLabelIndex(*float).map {
@@ -44,6 +56,8 @@ abstract class BinaryClassification(
 
     /**
      * Make a prediction
+     * @param bitmap you can pass an array of bitmaps or a single bitmap
+     * @return an array of floats, depending on how much bitmaps you send in
      */
     fun predict(vararg bitmap: Bitmap): FloatArray {
         try {
@@ -52,14 +66,17 @@ abstract class BinaryClassification(
                 val images = bitmap.scale(inputImageWidth, inputImageHeight, false)
                 // Convert the bitmap to a ByteBuffer
                 val modelInput = images.convertBitmapToByteBufferAndNormalized()
-                // Perform inference on the model
-                val list: ArrayList<Float> = ArrayList()
-                modelInput.forEach {
-                    interpreter.run(it, outputArray)
-                    list.add(outputArray[0][0])
-                    Log.e("OK", "${outputArray[0][0]}")
+                // Output you get from your model
+                val outputArray = Array(modelInput.size) { FloatArray(1) }
+                //Get output
+                interpreter.run(modelInput, outputArray)
+                //Flatten Data
+                val flattened = outputArray.map { predictions ->
+                    return@map predictions.map {
+                        return@map it
+                    }.first()
                 }
-                return@use list.toFloatArray()
+                return@use flattened.toFloatArray()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -67,7 +84,7 @@ abstract class BinaryClassification(
         throw Exception("Unable to detect")
     }
 
-    private fun Array<Bitmap>.convertBitmapToByteBufferAndNormalized(): Array<Array<Array<Array<FloatArray>>>> {
+    private fun Array<Bitmap>.convertBitmapToByteBufferAndNormalized(): Array<Array<Array<FloatArray>>> {
         val mapped = this.map {
             return@map convertBitmapToByteBufferAndNormalized(it)
         }

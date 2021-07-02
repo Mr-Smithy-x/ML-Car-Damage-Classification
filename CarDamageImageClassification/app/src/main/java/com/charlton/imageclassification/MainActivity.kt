@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.charlton.imageclassification.classification.CarDamageClassification
-import com.charlton.imageclassification.classification.base.BinaryClassification
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         firstPredBtn.setOnClickListener {
             val prediction = mDamagedDetection.predict(notDamagedBitmap!!)
-            val label = mDamagedDetection.getLabel(prediction.first()).first()
+            val label = mDamagedDetection.getLabel(*prediction).first()
             if (mDamagedDetection.isCarDamaged(prediction.first())) {
                 firstPredTxtOutput.text =
                     "This car is damaged: (Confidence: ${100 - prediction.first()}%)\nLabel: ${label}"
@@ -57,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
         secondPredBtn.setOnClickListener {
             val prediction = mDamagedDetection.predict(damagedBitmap!!)
-            val label = mDamagedDetection.getLabel(prediction.first()).first()
+            val label = mDamagedDetection.getLabel(*prediction).first()
             if (mDamagedDetection.isCarDamaged(prediction.first())) {
                 secondPredTxtOutput2.text =
                     "This car is damaged: (Confidence: ${100 - prediction.first()}%)\nLabel: ${label}"

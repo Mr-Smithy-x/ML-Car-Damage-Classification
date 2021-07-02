@@ -19,7 +19,11 @@ class CarDamageClassification(asset: AssetManager) : BinaryClassification(
      * Get Car Damage
      */
     fun isCarDamaged(prediction: Float): Boolean {
-        return getLabelIndex(prediction).first() == 0
+        return !isCarNew(prediction)
+    }
+
+    fun isCarNew(prediction: Float): Boolean {
+        return getLabelIndex(prediction).first() == 1
     }
 
 }
