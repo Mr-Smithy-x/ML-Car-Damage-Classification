@@ -13,3 +13,8 @@ the cut off point is 0.5. if the prediction is `0.83` then that indicates that t
 In this notebook we will discover how we can go from using a binary classification model to using a multi-class classification model.
 
 Multi-class classification is commonly used to determine what is described in the photo. We will go over how we can build our own classifier see the performance and improve the performance using transfer learning (A powerful way to transfer what another model learned into your own SOTA model)
+
+
+# Saving our Model and Importing into Android Studio as a tflite model
+
+In this repository there is an Android Project that utilizes the model we just created! I've created 3 classes that show how we can import the binary classifier functionlity into our app.
