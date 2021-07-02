@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.charlton.imageclassification.classification.CarDamageClassification
+import com.charlton.imageclassification.classification.base.BinaryClassification
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var secondPredBtn: Button
     lateinit var mFirstPredictionView: ImageView
     lateinit var mSecondPredictionView: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

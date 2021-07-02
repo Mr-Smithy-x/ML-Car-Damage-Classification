@@ -12,6 +12,15 @@ import java.nio.ByteOrder
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 
+/**
+ * TensorFlow Lite Model Loader
+ * loads tensorflow files from the asset folder path
+ * @param filename assets = root path "mydog/model" or "b0_model" without .tflite extension
+ * @param assets Android AssetManager
+ * @param inputImageHeight Input height of your model, typically 224x224 is the sweet spot for most models
+ * @param inputImageWidth Input width of your model, typically 224x224 is the sweet spot for most models
+ * @param channelSize Typically its 3 ie. RGB, sometimes 4 ARGB
+ */
 abstract class TFModelLoader(
     val filename: String,
     private val assets: AssetManager,

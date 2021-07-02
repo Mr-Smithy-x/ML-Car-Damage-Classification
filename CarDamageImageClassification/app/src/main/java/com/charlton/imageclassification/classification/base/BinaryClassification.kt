@@ -8,6 +8,14 @@ import org.tensorflow.lite.Interpreter
 import kotlin.math.round
 import kotlin.math.roundToInt
 
+/**
+ * Model Wrapper for well.... Binary Classification Models
+ *
+ * @see TFModelLoader for base functions
+ * @param labels Model Binary Labels - For binary its size 2
+ * @param model_file Model File
+ * @param asset Android AssetManager
+ */
 abstract class BinaryClassification(
     val labels: Array<String> = Array(2) {""}, // Labels to translated index to labels names
     model_file: String, // model of the file
