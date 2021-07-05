@@ -1,0 +1,17 @@
+
+item {
+  name: "bumper"
+  id: 0
+}
+item {
+  name: "door"
+  id: 1
+}
+item {
+  name: "glass_shatter"
+  id: 2
+}
+item {
+  name: "lamp"
+  id: 3
+}

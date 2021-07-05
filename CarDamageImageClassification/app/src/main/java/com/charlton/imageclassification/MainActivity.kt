@@ -7,11 +7,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.charlton.imageclassification.classification.CarDamageClassification
+import com.charlton.imageclassification.classification.CarDamageDetectionClassification
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var mDamagedDetection: CarDamageClassification
+    lateinit var mCar: CarDamageDetectionClassification
     lateinit var firstPredTxtOutput: TextView
     lateinit var secondPredTxtOutput2: TextView
     lateinit var firstPredBtn: Button
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         firstPredBtn = findViewById(R.id.btnFirstPredTest)
         secondPredBtn = findViewById(R.id.btnSecondPredTest)
         mDamagedDetection = CarDamageClassification(assets)
+        mCar = CarDamageDetectionClassification(assets)
 
         // assets folder image file name with extension
         val notDamagedFile = "whole.jpeg"
@@ -55,15 +58,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         secondPredBtn.setOnClickListener {
-            val prediction = mDamagedDetection.predict(damagedBitmap!!)
-            val label = mDamagedDetection.getLabel(*prediction).first()
-            if (mDamagedDetection.isCarDamaged(prediction.first())) {
-                secondPredTxtOutput2.text =
-                    "This car is damaged: (Confidence: ${100 - prediction.first()}%)\nLabel: ${label}"
-            } else {
-                secondPredTxtOutput2.text =
-                    "This car is not damaged: (Confidence: ${prediction.first()}%)\nLabel: ${label}"
-            }
+            val prediction = mCar.predict(damagedBitmap!!)
+            val max = mCar.getMaxValue(*prediction[0])
+            val label = mCar.getLabel(*prediction[0])
+
+            secondPredTxtOutput2.text = "Confidence: ${max}% | Label: ${label}"
+
         }
     }
 

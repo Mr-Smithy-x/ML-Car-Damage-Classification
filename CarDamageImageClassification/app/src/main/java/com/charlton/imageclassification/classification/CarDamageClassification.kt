@@ -11,7 +11,7 @@ import com.charlton.imageclassification.classification.base.BinaryClassification
  */
 class CarDamageClassification(asset: AssetManager) : BinaryClassification(
     labels = arrayOf("Damaged", "Not Damaged"), // 0 = Damaged, 1 = Not Damamged
-    model_file = "b0_model", // b0 model
+    model_file = "binary/b0_model", // b0 model
     asset = asset // Asset Manager
 ) {
 
